@@ -28,7 +28,7 @@ export const catalogContentSchema = z.object({
   heroImageUrl: imageUrl,
   sectionTitle: z.string().trim().min(1).max(100),
   sectionDescription: z.string().trim().max(300),
-  cards: z.array(showcaseCard).max(6),
+  cards: z.array(showcaseCard).max(12),
 }).strict();
 
 export type CatalogContent = z.infer<typeof catalogContentSchema>;
