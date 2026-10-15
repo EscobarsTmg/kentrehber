@@ -67,7 +67,7 @@ export default async function Panel({
         </div>
         <div className="rounded-xl border border-border bg-surface p-6">
           <p className="text-xs uppercase tracking-widest text-muted-foreground">Vitrin kartları</p>
-          <p className="mt-3 text-2xl font-semibold">{editor.content.cards.length} / 6</p>
+          <p className="mt-3 text-2xl font-semibold">{editor.content.cards.length} / 12</p>
         </div>
         <div className="rounded-xl border border-border bg-surface p-6">
           <p className="text-xs uppercase tracking-widest text-muted-foreground">Son kayıt</p>
@@ -129,9 +129,9 @@ export default async function Panel({
                 <h2 className="font-display text-3xl">Görseller ve metinler</h2>
               </div>
             </div>
-            <p className="mb-7 text-sm leading-6 text-muted-foreground">En fazla altı işletme veya koleksiyon kartı. Boş bıraktığın kartlar gösterilmez.</p>
+            <p className="mb-7 text-sm leading-6 text-muted-foreground">En fazla on iki yaratıcı portföy kartı. Boş bıraktığın kartlar gösterilmez.</p>
             <div className="grid gap-6">
-              {Array.from({ length: 6 }, (_, index) => {
+              {Array.from({ length: 12 }, (_, index) => {
                 const card = editor.content.cards[index];
                 return (
                   <fieldset key={index} className="rounded-xl border border-border bg-background/60 p-5">

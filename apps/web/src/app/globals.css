@@ -25,14 +25,14 @@
 @layer base {
   :root {
     color-scheme: dark;
-    --theme-default-bg: #191917;
-    --theme-default-surface: #22221f;
-    --theme-default-elevated: #2d2d28;
-    --theme-default-border: #414139;
-    --theme-default-text: #f2f0e6;
-    --theme-default-muted: #b5b5a5;
-    --theme-default-accent: #d6dd9c;
-    --theme-default-accent-alt: #dab69c;
+    --theme-default-bg: #141015;
+    --theme-default-surface: #201922;
+    --theme-default-elevated: #2c222e;
+    --theme-default-border: #473744;
+    --theme-default-text: #f7f0f2;
+    --theme-default-muted: #c8b7c3;
+    --theme-default-accent: #ebbbcd;
+    --theme-default-accent-alt: #cb8fa8;
     --theme-shadow: color-mix(in srgb, var(--theme-bg) 70%, transparent);
   }
   * {
@@ -81,4 +81,56 @@
   background:
     linear-gradient(120deg, var(--theme-bg), color-mix(in srgb, var(--theme-bg) 75%, transparent)),
     repeating-linear-gradient(45deg, var(--theme-elevated) 0 2px, var(--theme-surface) 2px 36px);
+}
+
+/* Editorial visual primitives stay palette-driven and work with saved themes. */
+.editorial-page {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 90% 7%, color-mix(in srgb, var(--theme-accent) 8%, transparent), transparent 30%),
+    var(--theme-bg);
+}
+.editorial-stage {
+  background:
+    radial-gradient(ellipse at 55% 40%, color-mix(in srgb, var(--theme-accent) 22%, var(--theme-elevated)), var(--theme-surface) 69%),
+    var(--theme-elevated);
+}
+.editorial-orbit {
+  pointer-events: none;
+  position: absolute;
+  border: 1px solid color-mix(in srgb, var(--theme-accent) 18%, transparent);
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+.editorial-orbit-one {
+  width: 85%;
+  top: 6%;
+  right: -23%;
+}
+.editorial-orbit-two {
+  width: 65%;
+  bottom: -20%;
+  left: -20%;
+}
+.editorial-card-blank {
+  background:
+    radial-gradient(circle at 72% 28%, color-mix(in srgb, var(--theme-accent) 19%, transparent), transparent 40%),
+    linear-gradient(142deg, var(--theme-elevated), var(--theme-surface) 75%);
+}
+.editorial-card-blank::after {
+  content: "";
+  position: absolute;
+  left: 24%;
+  top: 22%;
+  width: 60%;
+  height: 70%;
+  border: 1px solid color-mix(in srgb, var(--theme-accent) 23%, transparent);
+  border-radius: 47% 47% 0 0;
+  transform: rotate(-8deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .editorial-page *, .editorial-page *::before, .editorial-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

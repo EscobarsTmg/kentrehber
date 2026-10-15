@@ -16,7 +16,7 @@ export async function saveCatalogContent(data: FormData) {
   const session = await currentSession();
   if (!session) redirect('/admin/login');
 
-  const cards = Array.from({ length: 6 }, (_, index) => ({
+  const cards = Array.from({ length: 12 }, (_, index) => ({
     title: field(data, `cards.${index}.title`),
     eyebrow: field(data, `cards.${index}.eyebrow`),
     description: field(data, `cards.${index}.description`),
