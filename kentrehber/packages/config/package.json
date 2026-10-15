@@ -1,0 +1,15 @@
+{
+  "name": "@kentrehber/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./policy": "./src/policy.ts",
+    "./theme": "./src/theme.ts",
+    "./catalog": "./src/catalog.ts"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
+  }
+}
