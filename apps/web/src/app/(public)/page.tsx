@@ -104,7 +104,7 @@ export default async function Home() {
           </div>
 
           {hasCards ? (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-5">
               {catalog.cards.map((card, index) => (
                 <article key={index} className="group overflow-hidden rounded-2xl border border-border/80 bg-surface transition duration-300 hover:-translate-y-1 hover:border-accent/60">
                   <div className="relative">
@@ -117,10 +117,10 @@ export default async function Home() {
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <div className="p-5 sm:p-6">
-                    <h3 className="font-display text-2xl tracking-tight sm:text-[28px]">{card.title}</h3>
-                    {card.description ? <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-6 text-muted-foreground">{card.description}</p> : null}
-                    <div className="mt-5 flex items-center justify-between border-t border-border/80 pt-4 text-xs font-bold uppercase tracking-[0.14em] text-accent">
+                  <div className="p-3 sm:p-5">
+                    <h3 className="font-display text-lg tracking-tight sm:text-2xl">{card.title}</h3>
+                    {card.description ? <p className="mt-2 hidden line-clamp-2 min-h-10 text-sm sm:block leading-6 text-muted-foreground">{card.description}</p> : null}
+                    <div className="mt-4 hidden items-center justify-between border-t border-border/80 pt-4 text-xs sm:flex font-bold uppercase tracking-[0.14em] text-accent">
                       Seçkide yer alıyor <Compass aria-hidden className="h-4 w-4" />
                     </div>
                   </div>
@@ -128,7 +128,7 @@ export default async function Home() {
               ))}
             </div>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6" aria-label="Portföy kartları henüz yayınlanmadı">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-5" aria-label="Portföy kartları henüz yayınlanmadı">
               {['GÖRSEL HİKÂYELER', 'YARATICI PROJELER', 'YENİ SEÇKİLER'].map((label, index) => (
                 <div key={label} className="overflow-hidden rounded-2xl border border-border/70 bg-surface">
                   <div className="editorial-card-blank relative aspect-[3/4] overflow-hidden">
