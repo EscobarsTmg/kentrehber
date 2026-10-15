@@ -34,12 +34,12 @@ export const catalogContentSchema = z.object({
 export type CatalogContent = z.infer<typeof catalogContentSchema>;
 
 export const defaultCatalogContent: CatalogContent = {
-  eyebrow: 'SEÇKİLER / BAĞIMSIZ KATALOG',
-  title: 'Seçilen adresler. Tek bir vitrin.',
-  description: 'Özenli işletme seçkileri, güçlü görseller ve sade bir keşif deneyimi.',
+  eyebrow: 'EDITORIAL / KREATİF PORTFÖYLER',
+  title: 'Her portföy, farklı bir hikâye.',
+  description: 'Moda, fotoğraf ve yaratıcı projelerden özenle seçilmiş çalışmalar. Güçlü görsellerle yeni fikirler keşfedin.',
   heroImageUrl: '',
-  sectionTitle: 'Vitrindeki seçkiler',
-  sectionDescription: 'Yönetim panelinden yayınlanan içerikler burada yer alır.',
+  sectionTitle: 'Öne çıkan portföyler',
+  sectionDescription: 'Yeni çalışmalar yayınlandıkça bu seçki genişleyecek.',
   cards: [],
 };
 
