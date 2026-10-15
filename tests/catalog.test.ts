@@ -33,7 +33,7 @@ describe('catalog editor validation', () => {
       { ...defaultCatalogContent, heroImageUrl: 'http://images.example.com/a.jpg' },
       { ...defaultCatalogContent, heroImageUrl: 'https://user:pass@example.com/a.jpg' },
       { ...defaultCatalogContent, title: '' },
-      { ...defaultCatalogContent, cards: Array.from({ length: 7 }, () => ({
+      { ...defaultCatalogContent, cards: Array.from({ length: 13 }, () => ({
         title: 'X', eyebrow: '', description: '', imageUrl: '',
       })) },
       { ...defaultCatalogContent, unknown: true },
