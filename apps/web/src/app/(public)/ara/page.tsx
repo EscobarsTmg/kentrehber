@@ -83,16 +83,16 @@ export default async function SearchPage({
         </div>
 
         {matching.length ? (
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6">
+          <div className="mt-7 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-5">
             {matching.map((card, index) => (
               <article key={index} className="overflow-hidden rounded-2xl border border-border bg-surface">
                 <div className="relative">
                   <ImageFrame src={card.imageUrl || undefined} alt={card.title + ' görseli'} aspect="portrait" className="rounded-none border-0" />
                   <span className="absolute left-4 top-4 rounded-full border border-border bg-background/85 px-3 py-2 text-[10px] font-bold uppercase tracking-widest">{card.eyebrow || 'Portföy'}</span>
                 </div>
-                <div className="p-6">
-                  <h3 className="font-display text-2xl">{card.title}</h3>
-                  {card.description ? <p className="mt-3 text-sm leading-7 text-muted-foreground">{card.description}</p> : null}
+                <div className="p-3 sm:p-6">
+                  <h3 className="font-display text-lg sm:text-2xl">{card.title}</h3>
+                  {card.description ? <p className="mt-3 hidden text-sm leading-7 text-muted-foreground sm:block">{card.description}</p> : null}
                 </div>
               </article>
             ))}
