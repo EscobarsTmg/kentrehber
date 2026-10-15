@@ -1,153 +1,162 @@
 import Link from 'next/link';
-import { ArrowDown, ArrowRight, ArrowUpRight, LayoutGrid, Search, Sparkles } from 'lucide-react';
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Compass, Search, Sparkles } from 'lucide-react';
 import { ImageFrame } from '@kentrehber/ui/ImageFrame';
 import { getPublicCatalog } from '@/lib/catalog';
 import { getPublicCategories } from '@/lib/public-categories';
 
 export default async function Home() {
   const [catalog, categories] = await Promise.all([getPublicCatalog(), getPublicCategories()]);
+  const hasCards = catalog.cards.length > 0;
+  const feature = catalog.cards[0];
 
   return (
-    <div className="mx-auto max-w-7xl px-5 pb-20 sm:px-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border py-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-        <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent" /> Seçili içerikler / Tek vitrin</span>
-        <span>Dijital katalog — Türkiye</span>
-      </div>
+    <div className="editorial-page">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-7 lg:px-10">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/70 py-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-accent" /> KENTREHBER / PORTFÖY GALERİSİ</span>
+          <span>Bağımsız yaratıcı portföyler · Türkiye</span>
+        </div>
 
-      <section aria-labelledby="hero-title" className="relative my-7 overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_28px_80px_var(--theme-shadow)] sm:my-10">
-        <div className="grid min-h-[440px] lg:grid-cols-[1.06fr_0.94fr]">
-          <div className="relative z-10 flex flex-col justify-between p-7 sm:p-12 lg:p-14">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-accent/35 bg-accent/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.17em] text-accent">
-                <Sparkles aria-hidden className="h-4 w-4" />
-                {catalog.eyebrow}
+        <section className="relative py-9 lg:py-14" aria-labelledby="hero-title">
+          <div className="grid items-stretch gap-6 lg:grid-cols-[1.04fr_.96fr] xl:gap-10">
+            <div className="flex flex-col justify-between rounded-[22px] border border-border/70 bg-surface/70 px-6 py-9 sm:px-10 sm:py-11 lg:py-14">
+              <div>
+                <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-accent">
+                  <Sparkles aria-hidden className="h-4 w-4" /> {catalog.eyebrow}
+                </p>
+                <h1 id="hero-title" className="mt-7 max-w-[700px] font-display text-[clamp(2.85rem,5.6vw,5.95rem)] leading-[1.02] tracking-[-0.06em] text-foreground">
+                  {catalog.title}
+                </h1>
+                <p className="mt-6 max-w-xl text-[15px] leading-8 text-muted-foreground sm:text-base">
+                  {catalog.description}
+                </p>
+                <form role="search" action="/ara" method="get" className="mt-9 flex items-stretch gap-2 rounded-xl border border-border bg-background/80 p-2 focus-within:border-accent">
+                  <label htmlFor="home-search" className="sr-only">Katalogda ara</label>
+                  <span className="flex items-center pl-3 text-muted-foreground"><Search aria-hidden className="h-5 w-5" /></span>
+                  <input
+                    id="home-search"
+                    name="q"
+                    maxLength={100}
+                    className="min-w-0 flex-1 bg-transparent px-2 py-3 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+                    placeholder="Portföy, kategori veya proje ara"
+                  />
+                  <button type="submit" className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-accent px-4 text-sm font-bold text-background transition hover:opacity-90">
+                    Ara <ArrowRight aria-hidden className="h-4 w-4" />
+                  </button>
+                </form>
+                <div className="mt-6 flex flex-wrap items-center gap-2">
+                  <span className="mr-1 text-xs text-muted-foreground">Keşfet:</span>
+                  {categories.length ? categories.slice(0, 4).map((category) => (
+                    <Link key={category.slug} href={'/ara?category=' + encodeURIComponent(category.name)}
+                      className="rounded-full border border-border px-3 py-2 text-xs font-medium text-foreground/90 transition hover:border-accent">
+                      {category.name}
+                    </Link>
+                  )) : (
+                    <>
+                      <Link href="/ara" className="rounded-full border border-border px-3 py-2 text-xs hover:border-accent">Koleksiyonlar</Link>
+                      <a href="#portfoyler" className="rounded-full border border-border px-3 py-2 text-xs hover:border-accent">Öne çıkanlar</a>
+                    </>
+                  )}
+                </div>
               </div>
-              <h1 id="hero-title" className="mt-10 max-w-3xl font-display text-5xl leading-[1.08] tracking-[-0.045em] sm:text-6xl xl:text-7xl">
-                {catalog.title}
-              </h1>
-              <p className="mt-7 max-w-xl text-base leading-8 text-muted-foreground sm:text-lg">
-                {catalog.description}
-              </p>
-              <div className="mt-10 flex flex-wrap gap-3">
-                <a href="#katalog" className="inline-flex min-h-12 items-center gap-3 rounded-lg bg-accent px-6 text-sm font-bold text-background transition hover:opacity-90">
-                  Koleksiyonu incele <ArrowDown aria-hidden className="h-4 w-4" />
+              <div className="mt-12 flex items-center gap-3 border-t border-border/70 pt-5 text-[11px] font-semibold uppercase tracking-[0.17em] text-muted-foreground">
+                <span className="text-accent">01 / 03</span><span className="h-px w-10 bg-border" /> Tasarım ve yaratıcı çalışmalar
+              </div>
+            </div>
+
+            <div className="editorial-stage relative min-h-[390px] overflow-hidden rounded-[22px] border border-border/80 lg:min-h-[570px]">
+              {catalog.heroImageUrl ? (
+                <ImageFrame src={catalog.heroImageUrl} alt="Galeri kapak görseli" eager aspect="portrait" className="absolute inset-0 h-full w-full rounded-none border-0" />
+              ) : (
+                <div className="absolute inset-0" aria-label="Galeri kapak tasarım alanı" role="img">
+                  <div className="editorial-orbit editorial-orbit-one" />
+                  <div className="editorial-orbit editorial-orbit-two" />
+                  <div className="absolute left-[16%] top-[13%] h-[71%] w-[65%] rotate-[-9deg] rounded-t-[45%] border border-accent/25 bg-accent/5" />
+                  <div className="absolute left-[27%] top-[25%] h-[58%] w-[61%] rotate-[9deg] rounded-t-[47%] border border-accent/15 bg-surface/45" />
+                  <span className="absolute left-8 top-8 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">The visual edit / 01</span>
+                </div>
+              )}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/10" />
+              <div className="absolute bottom-8 left-7 right-7 flex items-end justify-between gap-4 sm:bottom-10 sm:left-10 sm:right-10">
+                <div>
+                  <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-accent">KentRehber Edit</p>
+                  <p className="max-w-sm font-display text-3xl leading-tight sm:text-4xl">Özenle seçilmiş bir görsel dünya.</p>
+                </div>
+                <a href="#portfoyler" aria-label="Portföylere ilerle" className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-accent/40 bg-background/50 text-accent backdrop-blur">
+                  <ArrowDownRight aria-hidden className="h-5 w-5" />
                 </a>
-                <Link href="/ara" className="inline-flex min-h-12 items-center gap-3 rounded-lg border border-border bg-elevated px-6 text-sm font-semibold hover:border-accent">
-                  Katalogda ara <Search aria-hidden className="h-4 w-4" />
-                </Link>
               </div>
             </div>
-            <div className="mt-14 flex items-center gap-3 border-t border-border pt-6 text-xs uppercase tracking-[0.15em] text-muted-foreground">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-accent/40 text-accent">01</span>
-              Görsel odaklı katalog
-            </div>
           </div>
-          <div className="relative min-h-[310px] overflow-hidden border-t border-border bg-elevated lg:min-h-[530px] lg:border-l lg:border-t-0">
-            {catalog.heroImageUrl ? (
-              <ImageFrame
-                src={catalog.heroImageUrl}
-                alt={catalog.title}
-                aspect="portrait"
-                eager
-                className="h-full min-h-[310px] rounded-none border-0 lg:min-h-[530px]"
-              />
-            ) : (
-              <div className="absolute inset-0 overflow-hidden" aria-label="Kapak görseli için tasarım alanı" role="img">
-                <div className="absolute -right-28 top-[-6rem] h-[28rem] w-[28rem] rounded-full border border-accent/25" />
-                <div className="absolute right-[-3rem] top-[1rem] h-[22rem] w-[22rem] rounded-full border border-accent/20" />
-                <div className="absolute right-12 top-28 h-[14rem] w-[14rem] rounded-full border border-accent/20" />
-                <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-background/85 to-transparent" />
-                <div className="absolute bottom-9 left-8 right-8 border-t border-accent/30 pt-5">
-                  <span className="text-7xl font-light tracking-tighter text-accent/60">01<span className="text-2xl">/06</span></span>
-                  <p className="mt-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">Kapak görseli / Yönetim panelinden düzenlenir</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {categories.length ? (
-        <section aria-label="İşletme kategorileri" className="my-8 rounded-xl border border-border bg-surface px-6 py-7 sm:px-8">
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-base font-semibold tracking-tight">Kategoriler</h2>
-            <span className="text-xs text-muted-foreground">{categories.length} kategori</span>
-          </div>
-          <ul className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <li key={category.slug} className="rounded-full border border-border bg-elevated px-4 py-2 text-xs font-semibold text-foreground">
-                {category.name}
-              </li>
-            ))}
-          </ul>
         </section>
-      ) : null}
 
-      <section id="katalog" className="scroll-mt-28 pt-10 sm:pt-14" aria-labelledby="catalog-title">
-        <div className="mb-9 flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <p className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-accent">
-              <LayoutGrid aria-hidden className="h-4 w-4" />
-              Küratöryel vitrin
-            </p>
-            <h2 id="catalog-title" className="font-display text-4xl tracking-tight sm:text-5xl">{catalog.sectionTitle}</h2>
-            <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">{catalog.sectionDescription}</p>
+        <section id="portfoyler" aria-labelledby="portfolios-title" className="scroll-mt-28 pb-14 pt-3 sm:pb-20">
+          <div className="mb-8 flex flex-col justify-between gap-5 border-b border-border/70 pb-8 sm:flex-row sm:items-end">
+            <div>
+              <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-accent">02 / Portföy seçkisi</p>
+              <h2 id="portfolios-title" className="font-display text-[clamp(2.4rem,4.7vw,4.4rem)] leading-[1.05] tracking-[-0.05em]">
+                {catalog.sectionTitle}
+              </h2>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">{catalog.sectionDescription}</p>
+            </div>
+            <Link href="/ara" className="inline-flex min-h-11 items-center gap-2 self-start rounded-full border border-accent/50 px-5 text-sm font-semibold text-accent hover:bg-accent/10">
+              Tüm portföyler <ArrowUpRight aria-hidden className="h-4 w-4" />
+            </Link>
           </div>
-          <Link href="/ara" className="inline-flex items-center gap-2 border-b border-accent pb-2 text-sm font-semibold text-accent hover:text-foreground">
-            Tümünü gör <ArrowUpRight aria-hidden className="h-4 w-4" />
-          </Link>
-        </div>
 
-        {catalog.cards.length ? (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {catalog.cards.map((card, index) => (
-              <article key={index} className="group overflow-hidden rounded-xl border border-border bg-surface transition hover:-translate-y-1 hover:border-accent/60">
-                <div className="relative overflow-hidden">
-                  <ImageFrame src={card.imageUrl || undefined} alt={card.title} aspect="portrait" className="rounded-none border-0" />
-                  <span className="absolute left-4 top-4 rounded-md border border-border bg-background/85 px-3 py-2 text-[11px] font-bold uppercase tracking-widest backdrop-blur-lg">
-                    {card.eyebrow || 'Seçki'}
-                  </span>
-                </div>
-                <div className="p-6">
-                  <p className="mb-3 text-xs tracking-[0.24em] text-muted-foreground">{String(index + 1).padStart(2, '0')} / KATALOG</p>
-                  <h3 className="font-display text-2xl">{card.title}</h3>
-                  {card.description ? <p className="mt-3 line-clamp-3 text-sm leading-7 text-muted-foreground">{card.description}</p> : null}
-                  <div className="mt-6 flex items-center justify-between border-t border-border pt-5 text-xs font-semibold uppercase tracking-widest text-accent">
-                    Koleksiyon <ArrowRight aria-hidden className="h-4 w-4 transition group-hover:translate-x-1" />
+          {hasCards ? (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6">
+              {catalog.cards.map((card, index) => (
+                <article key={index} className="group overflow-hidden rounded-2xl border border-border/80 bg-surface transition duration-300 hover:-translate-y-1 hover:border-accent/60">
+                  <div className="relative">
+                    <ImageFrame src={card.imageUrl || undefined} alt={card.title + ' portföy görseli'} aspect="portrait" className="rounded-none border-0" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/55 via-transparent to-transparent" />
+                    <span className="absolute left-4 top-4 rounded-full border border-border/80 bg-background/80 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-foreground backdrop-blur-xl">
+                      {card.eyebrow || 'Portföy'}
+                    </span>
+                    <span className="absolute bottom-4 right-5 font-display text-2xl text-foreground/70">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <div className="p-5 sm:p-6">
+                    <h3 className="font-display text-2xl tracking-tight sm:text-[28px]">{card.title}</h3>
+                    {card.description ? <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-6 text-muted-foreground">{card.description}</p> : null}
+                    <div className="mt-5 flex items-center justify-between border-t border-border/80 pt-4 text-xs font-bold uppercase tracking-[0.14em] text-accent">
+                      Seçkide yer alıyor <Compass aria-hidden className="h-4 w-4" />
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6" aria-label="Portföy kartları henüz yayınlanmadı">
+              {['GÖRSEL HİKÂYELER', 'YARATICI PROJELER', 'YENİ SEÇKİLER'].map((label, index) => (
+                <div key={label} className="overflow-hidden rounded-2xl border border-border/70 bg-surface">
+                  <div className="editorial-card-blank relative aspect-[3/4] overflow-hidden">
+                    <span className="absolute left-6 top-6 text-[11px] font-semibold uppercase tracking-[0.22em] text-accent">{label}</span>
+                    <span aria-hidden className="absolute -bottom-14 -right-4 font-display text-[230px] leading-none tracking-[-0.13em] text-accent/[0.10]">{index + 1}</span>
+                  </div>
+                  <div className="p-6">
+                    <p className="font-display text-2xl">Yeni bir hikâye için alan</p>
+                    <p className="mt-2 text-sm text-muted-foreground">Yayınlanmış portföy görselleri burada görüntülenecek.</p>
                   </div>
                 </div>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Boş koleksiyon yerleşimi">
-            {Array.from({ length: 6 }, (_, index) => (
-              <div key={index} className="overflow-hidden rounded-xl border border-border bg-surface">
-                <div className="relative aspect-[3/4] bg-elevated">
-                  <div className="absolute inset-5 rounded-lg border border-accent/15" />
-                  <span className="absolute bottom-6 left-6 font-display text-7xl text-accent/35">{String(index + 1).padStart(2, '0')}</span>
-                </div>
-                <div className="p-6">
-                  <div className="mb-4 h-2 w-20 rounded-full bg-elevated" />
-                  <div className="mb-3 h-4 w-3/4 rounded-full bg-elevated" />
-                  <p className="text-xs text-muted-foreground">İçerik yönetiminden doldurulacak alan</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+              ))}
+            </div>
+          )}
+        </section>
 
-      <section className="mt-16 flex flex-col items-start justify-between gap-5 rounded-2xl border border-border bg-elevated px-7 py-10 sm:flex-row sm:items-center sm:px-10">
-        <div>
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-accent">Katalog deneyimi</p>
-          <h2 className="font-display text-3xl">Aradığını daha kolay keşfet.</h2>
-          <p className="mt-3 text-sm text-muted-foreground">İçerikler yayına alındıkça katalog genişler.</p>
-        </div>
-        <Link href="/ara" className="inline-flex min-h-12 items-center gap-3 rounded-lg border border-accent px-5 text-sm font-bold text-accent hover:bg-accent hover:text-background">
-          Arama ekranı <ArrowUpRight aria-hidden className="h-4 w-4" />
-        </Link>
-      </section>
+        <section className="mb-16 flex flex-col justify-between gap-6 rounded-2xl border border-border bg-surface px-7 py-9 sm:flex-row sm:items-center sm:px-10 sm:py-10">
+          <div>
+            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-accent">03 / Keşif</p>
+            <h2 className="font-display text-3xl tracking-tight sm:text-4xl">İlham veren projeleri keşfet.</h2>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">Yayınlanan portföyleri ve kategorileri tek bir ekranda incele.</p>
+          </div>
+          <Link href="/ara" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-3 rounded-lg bg-accent px-6 text-sm font-bold text-background hover:opacity-90">
+            Galeride ara <ArrowRight aria-hidden className="h-4 w-4" />
+          </Link>
+        </section>
+      </div>
     </div>
   );
 }
