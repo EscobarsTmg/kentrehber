@@ -1,11 +1,11 @@
 node_modules/
+.pnpm/
 .next/
-dist/
-build/
 .env
 .env.*
 !.env.example
-.vercel/
+*.tsbuildinfo
+coverage/
+packages/db/generated/
 *.log
-*.pem
-*.key
+.DS_Store
