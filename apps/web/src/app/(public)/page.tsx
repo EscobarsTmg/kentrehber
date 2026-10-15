@@ -7,7 +7,6 @@ import { getPublicCategories } from '@/lib/public-categories';
 export default async function Home() {
   const [catalog, categories] = await Promise.all([getPublicCatalog(), getPublicCategories()]);
   const hasCards = catalog.cards.length > 0;
-  const feature = catalog.cards[0];
 
   return (
     <div className="editorial-page">
